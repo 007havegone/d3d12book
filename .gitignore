@@ -48,3 +48,13 @@ Temporary Items
 .vs/
 Release/
 x64/
+
+*.log
+*.tlog
+*.pdb
+*.obj
+*.ilk
+*.idb
+*.recipe
+*.exe
+*.user
