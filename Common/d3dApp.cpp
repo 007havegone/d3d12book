@@ -162,7 +162,7 @@ void D3DApp::OnResize()
 		DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH));
 
 	mCurrBackBuffer = 0;
- 
+	// Create the Render Target View
 	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle(mRtvHeap->GetCPUDescriptorHandleForHeapStart());
 	for (UINT i = 0; i < SwapChainBufferCount; i++)
 	{
@@ -490,7 +490,7 @@ void D3DApp::CreateCommandObjects()
 		IID_PPV_ARGS(mDirectCmdListAlloc.GetAddressOf())));
 
 	ThrowIfFailed(md3dDevice->CreateCommandList(
-		0,
+		0,							// Single GPU is 0
 		D3D12_COMMAND_LIST_TYPE_DIRECT,
 		mDirectCmdListAlloc.Get(), // Associated command allocator
 		nullptr,                   // Initial PipelineStateObject
@@ -604,7 +604,7 @@ void D3DApp::CalculateFrameStats()
 		timeElapsed += 1.0f;
 	}
 }
-
+// Display the GPU Adapter
 void D3DApp::LogAdapters()
 {
     UINT i = 0;

@@ -10,6 +10,7 @@ GameTimer::GameTimer()
   mPausedTime(0), mPrevTime(0), mCurrTime(0), mStopped(false)
 {
 	__int64 countsPerSec;
+	// Performance frequency, which is fixed at system boot and is constant across all processors.
 	QueryPerformanceFrequency((LARGE_INTEGER*)&countsPerSec);
 	mSecondsPerCount = 1.0 / (double)countsPerSec;
 }
