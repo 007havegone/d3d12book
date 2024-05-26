@@ -168,6 +168,8 @@ void BoxApp::Update(const GameTimer& gt)
 
 	// Update the constant buffer with the latest worldViewProj matrix.
 	ObjectConstants objConstants;
+    // Why here using the Transpose,  side using row-major while GPU side is column-major.
+    // https://stackoverflow.com/questions/32037617/why-is-this-transpose-required-in-my-worldviewproj-matrix
     XMStoreFloat4x4(&objConstants.WorldViewProj, XMMatrixTranspose(worldViewProj));
     mObjectCB->CopyData(0, objConstants);
 }
@@ -295,7 +297,7 @@ void BoxApp::BuildConstantBuffers()
 	UINT objCBByteSize = d3dUtil::CalcConstantBufferByteSize(sizeof(ObjectConstants));
 
 	D3D12_GPU_VIRTUAL_ADDRESS cbAddress = mObjectCB->Resource()->GetGPUVirtualAddress();
-    // Offset to the ith object constant buffer in the buffer.
+    // Offset to the i-th object constant buffer in the buffer.
     int boxCBufIndex = 0;
 	cbAddress += boxCBufIndex*objCBByteSize;
 

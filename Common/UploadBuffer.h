@@ -28,13 +28,14 @@ public:
 			D3D12_RESOURCE_STATE_GENERIC_READ,
             nullptr,
             IID_PPV_ARGS(&mUploadBuffer)));
-
+        // resource ID, range(nullptr is all),  resource pointer
+        // Get the CPU pointer of the resource.
         ThrowIfFailed(mUploadBuffer->Map(0, nullptr, reinterpret_cast<void**>(&mMappedData)));
 
         // We do not need to unmap until we are done with the resource.  However, we must not write to
         // the resource while it is in use by the GPU (so we must use synchronization techniques).
     }
-
+    // Prevent the Copy and assignment.
     UploadBuffer(const UploadBuffer& rhs) = delete;
     UploadBuffer& operator=(const UploadBuffer& rhs) = delete;
     ~UploadBuffer()
@@ -49,7 +50,7 @@ public:
     {
         return mUploadBuffer.Get();
     }
-
+    // Write the data into resource buffer at elementIndex.
     void CopyData(int elementIndex, const T& data)
     {
         memcpy(&mMappedData[elementIndex*mElementByteSize], &data, sizeof(T));
